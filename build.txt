@@ -1,8 +1,14 @@
 version = "DEV 1.0.1"
 
-This version of SDE was built and uploaded to github on Fri Nov 4 2016
-This is a DEV version of SDE and is nowhere near suitable for public release
-If you have received a copy of this game, please do not release it or share it with anyone.
+
+CHANGELOG
+
++ Added Menu version text
+
+
+
+This version of SDE was built and uploaded to github on Tuesday Nov 8 2016
+This is a DEV version of SDE and is unfinished
 Please expect bugs, missing features, and other inconsistancies. 
 The features in this version may be subject to change, or removal entirely.
 Please report all problems and bugs to me (Red) at <crayman122@gmail.com>
