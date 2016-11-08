@@ -1,4 +1,4 @@
-DEV 1.0.0
+version = "DEV 1.0.1"
 
 This version of SDE was built and uploaded to github on Fri Nov 4 2016
 This is a DEV version of SDE and is nowhere near suitable for public release
