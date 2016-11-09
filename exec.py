@@ -39,6 +39,7 @@ class makeobj(object):
         self.obj.rect.left = self.x
         self.obj.rect.top = self.y
         render_group.add(self.obj)
+        self.render_group = render_group
     def setpos(self, (x,y)):
         #set position (x*16, y*16)
         self.x = x*16
@@ -52,6 +53,17 @@ class makeobj(object):
         for i in range(len(self.groups)):
             self.collisions.append(pygame.sprite.spritecollideany(self.obj, self.groups[i]))
         return self.collisions
+    def changesprite(self, sprite):
+        self.sprite = sprite
+        self.obj.image = pygame.image.load(self.sprite)
+        self.obj.rect = self.obj.image.get_rect()
+        self.obj.rect.left = self.x
+        self.obj.rect.top = self.y
+        self.render_group.draw(screen)
+        pygame.display.update()
+    def remove(self):
+        self.changesprite('resource/sprite/nothing.gif')
+        self = None
 #Define render groups here
 mountain_group = pygame.sprite.OrderedUpdates()
 tree_group = pygame.sprite.OrderedUpdates()
@@ -123,6 +135,13 @@ class text(object):
         self.rect = self.obj.get_rect(left=self.x, top=self.y)
         screen.blit(self.obj, self.rect)
         pygame.display.update()
+    def changeascii(self, new):
+        self.red1 = self.red
+        self.green1 = self.green
+        self.blue1 = self.blue
+        self.color((255,255,255))
+        self.ascii = new
+        self.color((self.red1, self.green1, self.blue1))     
     def color(self, (red, green, blue)):
         #change text color
         self.red = red
@@ -353,11 +372,12 @@ class inputnum(object):
     def __init__(self, maximum, minimum=1):
         self.maximum = maximum
         self.minimum = minimum
-        self.value = minimum
+        self.value = self.minimum
         self.inputgroup = pygame.sprite.OrderedUpdates()
         self.inputbox =  makeobj((0, 0), 'resource/sprite/num.gif', self.inputgroup)
         self.inputgroup.draw(screen)
-        self.text = text((4, 16), str(self.value), (0,0,0))
+        self.text = text((4, 8), str(self.value), (0,0,0))
+        self.resume = False
         while self.resume == False:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -366,9 +386,9 @@ class inputnum(object):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN:
                         self.sound = playsound('resource/sound/blip.ogg')
-                        if self.value != self.minimum: 
+                        if self.value != self.minimum and self.value != 0: 
                             self.value -= 1
-                            self.text.ascii = str(self.value)
+                            self.text.changeascii(str(self.value))
                             self.text.redraw()
                     elif event.key == pygame.K_z:
                         self.sound = playsound('resource/sound/blip.ogg')
@@ -379,13 +399,13 @@ class inputnum(object):
                         self.value = 0
                     elif event.key == pygame.K_UP:
                         self.sound = playsound('resource/sound/blip.ogg')
-                        if self.value != self.maximum:
+                        if self.value != self.maximum and self.value != 999:
                             self.value += 1
-                            self.text.ascii = str(self.value)
+                            self.text.changeascii(str(self.value))
                             self.text.redraw()
+        print self.value
         self.text.remove()
-        return self.value
-        self = None
+        self.inputbox.remove()
 class inventory(object):
     ###############################
     #documentation for inventories#
@@ -655,6 +675,7 @@ char_group = pygame.sprite.OrderedUpdates()
 groups = [mountain_group, tree_group, house_group]
 character = char()
 gametick(1)
+counter = inputnum(1, 5)
 #Main loop
 while end != True:
     for event in pygame.event.get():

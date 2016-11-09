@@ -1,7 +1,11 @@
-version = "DEV 1.0.2"
+version = "DEV 1.0.3"
 
 
 CHANGELOG
+
+DEV 1.0.3
+* More updates to input box
+* Fixed the menu being off by 4 Pixels. 4 PIXELS!!!!
 
 DEV 1.0.2
 * Fixed the 'blinky text' caused by updating the display too often
