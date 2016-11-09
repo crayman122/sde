@@ -1,8 +1,14 @@
-version = "DEV 1.0.1"
+version = "DEV 1.0.2"
 
 
 CHANGELOG
 
+DEV 1.0.2
+* Fixed the 'blinky text' caused by updating the display too often
++ Added a graphical number input box class. Has not been tested fully.
+
+
+DEV 1.0.1
 + Added Menu version text
 
 

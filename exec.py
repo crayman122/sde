@@ -174,64 +174,51 @@ class text(object):
         if self.boldstate == True:
             self.obj = font.render(self.ascii, False, (255,255,255))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
             pygame.font.Font.set_bold(font, True)
             self.obj = font.render(self.ascii, False, (self.red,self.green,self.blue))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
         elif self.boldstate == False:
             self.obj = font.render(self.ascii, False, (255,255,255))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
             pygame.font.Font.set_bold(font, False)
             self.obj = font.render(self.ascii, False, (self.red,self.green,self.blue))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
         if self.italicstate == True:
             self.obj = font.render(self.ascii, False, (255,255,255))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
             pygame.font.Font.set_italic(font, True)
             self.obj = font.render(self.ascii, False, (self.red,self.green,self.blue))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
         elif self.italicstate == False:
             self.obj = font.render(self.ascii, False, (255,255,255))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
             pygame.font.Font.set_italic(font, False)
             self.obj = font.render(self.ascii, False, (self.red,self.green,self.blue))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
         if self.underlinestate == True:
             self.obj = font.render(self.ascii, False, (255,255,255))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
             pygame.font.Font.set_underline(font, True)
             self.obj = font.render(self.ascii, False, (self.red,self.green,self.blue))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
         elif self.underlinestate == False:
             self.obj = font.render(self.ascii, False, (255,255,255))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
             pygame.font.Font.set_underline(font, False)
             self.obj = font.render(self.ascii, False, (self.red,self.green,self.blue))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
         else:
             self.obj = font.render(self.ascii, False, (255,255,255))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
             pygame.font.Font.set_bold(font, False)
             pygame.font.Font.set_italic(font, False)
             pygame.font.Font.set_underline(font, False)
             self.obj = font.render(self.ascii, False, (self.red,self.green,self.blue))
             screen.blit(self.obj, self.rect)
-            pygame.display.update()
         pygame.font.Font.set_underline(font, False)
         pygame.font.Font.set_italic(font, False)
         pygame.font.Font.set_bold(font, False)
+        pygame.display.update()
 class playsound(object):
     #plays a sound
     def __init__(self, filename):
@@ -362,6 +349,43 @@ class menunew(object):
                     self.choiceobj4.underline(state=True)
         else:
             self = None
+class inputnum(object):
+    def __init__(self, maximum, minimum=1):
+        self.maximum = maximum
+        self.minimum = minimum
+        self.value = minimum
+        self.inputgroup = pygame.sprite.OrderedUpdates()
+        self.inputbox =  makeobj((0, 0), 'resource/sprite/num.gif', self.inputgroup)
+        self.inputgroup.draw(screen)
+        self.text = text((4, 16), str(self.value), (0,0,0))
+        while self.resume == False:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN:
+                        self.sound = playsound('resource/sound/blip.ogg')
+                        if self.value != self.minimum: 
+                            self.value -= 1
+                            self.text.ascii = str(self.value)
+                            self.text.redraw()
+                    elif event.key == pygame.K_z:
+                        self.sound = playsound('resource/sound/blip.ogg')
+                        self.resume = True
+                    elif event.key == pygame.K_c:
+                        self.sound = playsound('resource/sound/blip.ogg')
+                        self.resume = True
+                        self.value = 0
+                    elif event.key == pygame.K_UP:
+                        self.sound = playsound('resource/sound/blip.ogg')
+                        if self.value != self.maximum:
+                            self.value += 1
+                            self.text.ascii = str(self.value)
+                            self.text.redraw()
+        self.text.remove()
+        return self.value
+        self = None
 class inventory(object):
     ###############################
     #documentation for inventories#
