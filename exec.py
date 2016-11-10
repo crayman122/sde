@@ -269,7 +269,7 @@ class textbox(object):
                         self.sound = playsound('resource/sound/bading.ogg')
                         self.end = True
                         self.textobj.remove()
-                        gametick(1)
+                        
                         
 class menunew(object):
     #makes a menu using new classes
@@ -406,6 +406,8 @@ class inputnum(object):
         print self.value
         self.text.remove()
         self.inputbox.remove()
+        self = self.value
+        gametick(1)
 class inventory(object):
     ###############################
     #documentation for inventories#
@@ -545,7 +547,7 @@ def gameintro():
     screen.fill((255,255,255))
     pygame.display.update()
     pygame.time.delay(1000)
-    introtxt1 = text((-81, 64+8), "- LOW", (230,230,230))
+    introtxt1 = text((-100, 64+8), "- LOW", (230,230,230))
     introtxt2 = text((500, 64+8), "PRESSURE -", (230,230,230))
     color = 230
     location1 = -81
@@ -616,6 +618,7 @@ def encounter():
                 escapebox = textbox('Couldnt escape!')
             else:
                 escapebox = textbox('You got away')
+                gametick(1)
                 battleend = True
     else:
         pass
@@ -624,13 +627,15 @@ def inventorymenu():
     #rather than starting a new thing :/
     return None
 def newgame():
-    pygame.mixer.music.stop()
-    screen.fill((255,255,255))
+    screen.fill((0,0,0))
     pygame.display.update()
-    pygame.time.delay(1000)
-    self.resume = True
+    pygame.time.delay(750)
+    t1 = textbox(' Where am I?')
+    t2 = textbox(' Am I dead?')
+    t3 = textbox(' No, I\'m not dead...')
+    t4 = textbox(' * You open your eyes *')
+    pygame.time.delay(750)
     initoverworld()
-    gametick()
 def mainmenu():
     screen.fill((255,255,255))
     pygame.display.update()
@@ -642,27 +647,25 @@ def mainmenu():
     versiontext = text((1,160-16), version, (0,0,0))
     pygame.mixer.music.load('resource/sound/musictemp.ogg')
     pygame.mixer.music.play(0)
-    menu = menunew("Main Menu", ["New", "Load", "Quit"], ['pygame.mixer.music.stop(); self.resume = True', '', 'pygame.quit(); exit()'])
-    pygame.time.delay(1000)
+    menu = menunew("Main Menu", ["New", "Load", "Quit"], ['pygame.mixer.music.stop(); self.resume = True; newgame()', '', 'pygame.quit(); exit()'])
 def gametick(kind=0):
     #0 for full tick
-    #1 for screen redraw only
+    #1 for redraw only
     print 'gametick'
-    if kind != 1:
-        if random.randint(1, 10) == random.randint(1,10):
-            print 'two numbers were equal'
-            if battleend == False:
-                print 'battle is already in progress, ignoring'
-            else:
-                encounter()
-    else:
-        pass
     screen.fill((255,255,255))  
     char_group.draw(screen)
     tree_group.draw(screen)
     house_group.draw(screen)
     mountain_group.draw(screen)
     pygame.display.update()
+    if battleend == True:
+        if random.randint(1, 25) == random.randint(1,25):
+            print 'two numbers were equal'
+            if battleend == False:
+                print 'battle is already in progress, ignoring'
+            else:
+                encounter()
+                gametick(1)
 battleend = True 
 end = False
 #Runonce functions
@@ -675,7 +678,6 @@ char_group = pygame.sprite.OrderedUpdates()
 groups = [mountain_group, tree_group, house_group]
 character = char()
 gametick(1)
-counter = inputnum(1, 5)
 #Main loop
 while end != True:
     for event in pygame.event.get():

@@ -1,7 +1,14 @@
-version = "DEV 1.0.3"
+version = "DEV 1.0.4"
 
 
 CHANGELOG
+
+DEV 1.0.4
+* Input box complete
+* Fixed a glitch where the menu and textbox would not dissappear after running from a battle
+* Recentered game intro text
++ Added an intro 'story'
+
 
 DEV 1.0.3
 * More updates to input box
