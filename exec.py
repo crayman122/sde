@@ -252,7 +252,7 @@ class textbox(object):
         self.boxobj = makeobj((0,5), "resource/sprite/textbox.gif", self.boxgroup)
         self.boxgroup.draw(screen)
         pygame.display.update()
-        self.textobj = text((4,84), self.string, (0,0,0))
+        self.textobj = text((6,84), self.string, (0,0,0))
         pygame.display.update()
         self.end = False
         while self.end != True:
@@ -651,10 +651,11 @@ def mainmenu():
     menu = menunew("Main Menu", ["New", "Load", "Quit"], ['pygame.mixer.music.stop(); self.resume = True; newgame()', '', 'pygame.quit(); exit()'])
 def town():
     resume = False
+    townchat = ['You\'re new here...', 'Legend has it there\'s a massive\ndungeon under this town.', 'Be careful if you go into\nthe forrest. The animals are acting weird', 'Who are you?', '(Press <C> to open your menu)']
     while resume != True:
         townmenu = menunew("Welcome!", ['Chat', 'Shop', 'Leave'], ['self.resume = 1', 'self.resume = 2', 'self.resume = True'])
         if townmenu.resume == 1:
-            tb = textbox('WIP')
+            tb = textbox(townchat[random.randint(0, 4)]) #Generate random message may add more in future
         if townmenu.resume == 2:
             tb = textbox('WIP')
         if townmenu.resume == True:
