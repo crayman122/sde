@@ -1,14 +1,10 @@
-#open the door
-#get on the floor
-#every body walk the dinosaur
-#chris olson is a sexy beast
-#sebastian is cooler than chris
+#Greetings from Cleveland!
 import pygame
 import time
 import random
-import os.path
+import os.path #Resource checks
 import sys
-import linecache #needed for reading/writing files
+import linecache #needed for reading files
 #Perform file exists checks
 if os.path.exists("resource") == False:
     print "FATAL EXECPTION 1.0: Directory \'resource\' does not exist!"
@@ -23,7 +19,7 @@ if os.path.exists("resource/font") == False:
 pygame.init()
 screeninfo = pygame.display.Info()
 screen = pygame.display.set_mode((416, 160))
-pygame.display.set_caption("Super Dungeon Adventure PC")
+pygame.display.set_caption("Super Dungeon Explorer")
 font = pygame.font.Font('resource/font/pressstart2p.ttf', 13)
 #define all necesary classes
 class makeobj(object):
@@ -477,6 +473,7 @@ class char(object):
         self.char.rect = self.char.image.get_rect()
         self.inv = inventory()
         self.inv.additem(0,10)
+        self.collisions = self.collision(groups)
         self.attributes = {'health': 100 , 'maxhealth': 100, 'mana': 10, 'maxmana': 10, 'level': 1, 'xp': 0} 
         global char_group
         char_group.add(self.char)
@@ -499,6 +496,7 @@ class char(object):
     def up(self):
         self.yb = self.y - 1
         self.char.rect.top = self.yb*16
+        self.collisions = self.collision(groups)
         if all(v is None for v in self.collision(groups)) == True:
             if self.yb < 10 and self.yb >= 0:
                 self.y = self.yb
@@ -510,6 +508,7 @@ class char(object):
     def down(self):
         self.yb = self.y + 1
         self.char.rect.top = self.yb*16
+        self.collisions = self.collision(groups)
         if all(v is None for v in self.collision(groups)) == True:
             if self.yb < 10 and self.yb >= 0:
                 self.y = self.yb
@@ -521,6 +520,7 @@ class char(object):
     def left(self):
         self.xb = self.x - 1
         self.char.rect.left = self.xb*16
+        self.collisions = self.collision(groups)
         if all(v is None for v in self.collision(groups)) == True:
             if self.xb <= 25 and self.xb >= 0:
                 self.x = self.xb
@@ -532,6 +532,7 @@ class char(object):
     def right(self):
         self.xb = self.x + 1
         self.char.rect.left = self.xb*16
+        self.collisions = self.collision(groups)
         if all(v is None for v in self.collision(groups)) == True:
             if self.xb <= 25 and self.xb >= 0:
                 self.x = self.xb
@@ -658,7 +659,9 @@ def gametick(kind=0):
     house_group.draw(screen)
     mountain_group.draw(screen)
     pygame.display.update()
+    
     if battleend == True:
+        print character.collisions
         if random.randint(1, 25) == random.randint(1,25):
             print 'two numbers were equal'
             if battleend == False:

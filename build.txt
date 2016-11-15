@@ -1,7 +1,11 @@
-version = "DEV 1.0.4"
+version = "DEV 1.0.5"
 
 
 CHANGELOG
+DEV 1.0.5
+
+* This update includes no new or fixed features, and is only a test
+
 
 DEV 1.0.4
 * Input box complete
