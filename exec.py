@@ -649,6 +649,17 @@ def mainmenu():
     pygame.mixer.music.load('resource/sound/musictemp.ogg')
     pygame.mixer.music.play(0)
     menu = menunew("Main Menu", ["New", "Load", "Quit"], ['pygame.mixer.music.stop(); self.resume = True; newgame()', '', 'pygame.quit(); exit()'])
+def town():
+    resume = False
+    while resume != True:
+        townmenu = menunew("Welcome!", ['Chat', 'Shop', 'Leave'], ['self.resume = 1', 'self.resume = 2', 'self.resume = True'])
+        if townmenu.resume == 1:
+            tb = textbox('WIP')
+        if townmenu.resume == 2:
+            tb = textbox('WIP')
+        if townmenu.resume == True:
+            resume = True
+    gametick(1)
 def gametick(kind=0):
     #0 for full tick
     #1 for redraw only
@@ -659,16 +670,18 @@ def gametick(kind=0):
     house_group.draw(screen)
     mountain_group.draw(screen)
     pygame.display.update()
-    
-    if battleend == True:
-        print character.collisions
-        if random.randint(1, 25) == random.randint(1,25):
-            print 'two numbers were equal'
-            if battleend == False:
-                print 'battle is already in progress, ignoring'
-            else:
-                encounter()
-                gametick(1)
+    if kind == 0:
+        if battleend == True:
+            print character.collisions
+            if random.randint(1, 25) == random.randint(1,25):
+                print 'two numbers were equal'
+                if battleend == False:
+                    print 'battle is already in progress, ignoring'
+                else:
+                    encounter()
+                    gametick(1)
+        if character.collisions[2] != None:
+            town()
 battleend = True 
 end = False
 #Runonce functions
@@ -704,6 +717,5 @@ while end != True:
                 gametick()
             elif event.key == pygame.K_ESCAPE:
                 end = True
-    
 pygame.quit()
 quit()
