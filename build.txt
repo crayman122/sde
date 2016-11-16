@@ -1,7 +1,12 @@
-version = "DEV 1.0.5"
+version = "DEV 1.0.6"
 
 
 CHANGELOG
+
+DEV 1.0.6
+
+* Just adjusted some code formatting
+
 DEV 1.0.5
 
 + Added framework for the town interactions (needs dialouge and shop)

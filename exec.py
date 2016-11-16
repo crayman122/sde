@@ -50,6 +50,7 @@ class makeobj(object):
             self.collisions.append(pygame.sprite.spritecollideany(self.obj, self.groups[i]))
         return self.collisions
     def changesprite(self, sprite):
+        #possibly does not work
         self.sprite = sprite
         self.obj.image = pygame.image.load(self.sprite)
         self.obj.rect = self.obj.image.get_rect()
@@ -58,6 +59,7 @@ class makeobj(object):
         self.render_group.draw(screen)
         pygame.display.update()
     def remove(self):
+        #does not work
         self.changesprite('resource/sprite/nothing.gif')
         self = None
 #Define render groups here
@@ -118,6 +120,7 @@ def initoverworld():
 class text(object):
     #makes a text
     def __init__(self, (x,y), ascii, (red, green, blue)):
+        #Position is exact pixel !NOT! on grid.
         self.x = x
         self.y = y
         self.ascii = ascii
@@ -132,6 +135,7 @@ class text(object):
         screen.blit(self.obj, self.rect)
         pygame.display.update()
     def changeascii(self, new):
+        #changes text content
         self.red1 = self.red
         self.green1 = self.green
         self.blue1 = self.blue
@@ -272,7 +276,6 @@ class menunew(object):
     #You can use self.resume values to do different things based on output
     def __init__(self, title, choices, functions):
         self.opensound = playsound('resource/sound/bading.ogg')
-        
         resume = False
         self.header = title
         if len(choices) > 5 or len(functions) > 5:
@@ -416,12 +419,11 @@ class inventory(object):
     #3 key                        #
     #4 Other (Meta specified)     #
     ###############################
-    #TODO                         #
-    #                             #
-    ###############################
     def __init__(self):
+        #Creates inventory
         self.inventory = []
     def additem(self, itemval, ammount, meta=None):
+        #add an item to the inventory
         self.itemtoadd = {'type': itemval, 'number': ammount, 'meta': meta}
         loop = next((a for a in self.inventory if a ['type'] == itemval), None)
         if loop:
@@ -429,6 +431,7 @@ class inventory(object):
         else:
             self.inventory.append(self.itemtoadd)
     def removeitem(self, itemval, ammount):
+        #remove an item from the inventory.
         loop = next((a for a in self.inventory if a ['type'] == itemval), None)
         if loop:
             loop['number'] -= ammount
@@ -622,11 +625,7 @@ def encounter():
                 gametick(1)
                 battleend = True
     else:
-        pass
-def inventorymenu():
-    #well fuck. I don't know even where to start, I should probably be debuging the acutal program fist though,
-    #rather than starting a new thing :/
-    return None
+        pass 
 def newgame():
     screen.fill((0,0,0))
     pygame.display.update()
